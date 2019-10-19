@@ -1,5 +1,5 @@
 const request = require('request-promise');
-export default class AppCenterBuild {
+export default class Build {
 
     static getBuildConfiguration(branch, token, owner, app) {
         const endpoint = `/branches/${branch}/config`;
