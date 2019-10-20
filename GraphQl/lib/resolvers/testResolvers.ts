@@ -11,7 +11,7 @@ const TestResolvers = {
   },*/
 };
 
-export default { TestResolvers };
+export default TestResolvers;
 
 /*
 Test

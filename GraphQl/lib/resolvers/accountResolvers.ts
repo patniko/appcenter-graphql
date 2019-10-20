@@ -1,22 +1,42 @@
 import { AccountApi } from "../appcenter";
+import { TokenFromContext } from "./utils";
 
 const AccountResolvers = {
-  async account(obj, args, context) {
-    const response = await AccountApi.getAccount(context.token);
-    return response;
+  Query: {
+    async account(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AccountApi.getAccount(token);
+      return response;
+    },
+    async organizations(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AccountApi.getOrganizations(token);
+      return response;
+    },
+    async apps(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AccountApi.getApps(token, obj.owner);
+      return response;
+    },
+
+    async app(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AccountApi.getApp(token, obj.owner, obj.app);
+      return response;
+    }
   },
-  async organizations(obj, args, context) {
-    const response = await AccountApi.getOrganizations(context.token);
-    return response;
+  Account: {
+    async __resolveType(obj, context, info){
+      const token = TokenFromContext(context);
+      const response = await AccountApi.getAccount(token);
+      return response;
+    },
+    async organizations(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AccountApi.getOrganizations(token);
+      return response;
+    },
   },
-  async apps(obj, args, context) {
-    const response = await AccountApi.getApps(context.token, obj.owner);
-    return response;
-  },
-  async app(obj, args, context) {
-    const response = await AccountApi.getApp(context.token, obj.owner, obj.app);
-    return response;
-  }
 };
 
-export default { AccountResolvers };
+export default AccountResolvers;

@@ -11,4 +11,4 @@ const DiagnosticsResolvers = {
   },*/
 };
 
-export default { DiagnosticsResolvers };
+export default DiagnosticsResolvers;

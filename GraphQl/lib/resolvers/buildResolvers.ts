@@ -11,4 +11,4 @@ const BuildResolvers = {
   },*/
 };
 
-export default { BuildResolvers };
+export default BuildResolvers;

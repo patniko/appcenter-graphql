@@ -11,7 +11,7 @@ const AnalyticsResolvers = {
   },*/
 };
 
-export default { AnalyticsResolvers };
+export default AnalyticsResolvers;
 /*
 Analytics
 - active users

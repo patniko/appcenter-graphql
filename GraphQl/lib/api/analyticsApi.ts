@@ -1,23 +1,33 @@
-const request = require('request-promise');
-export default class AnalyticsApi {
+import { BuildRequestOptions } from "./utils";
+import request = require("request-promise");
 
-    static getBuildConfiguration(branch, token, owner, app) {
+export default class AnalyticsApi {
+    static getAnalytics(branch, token, owner, app) {
         const endpoint = `/branches/${branch}/config`;
-        var options = BuildUrl(endpoint, token, owner, app);
+        var options = BuildRequestOptions(endpoint, token, owner, app);
+        return request(options);
+
+
+
+        // oses
+
+        // models
+
+        // sessions
+
+        // languages
+    }
+
+
+    static getOses(branch, token, owner, app) {
+        const endpoint = `/branches/${branch}/config`;
+        var options = BuildRequestOptions(endpoint, token, owner, app);
         return request(options);
     }
 
     static deletePrBuildConfiguration(branch, token, owner, app) {
-        const options = BuildUrl(`/branches/${branch}/config`, token, owner, app);
+        const options = BuildRequestOptions(`/branches/${branch}/config`, token, owner, app);
         Object.assign(options, { method: 'DELETE' });
         return request(options);
     }
 };
-
-function BuildUrl(endpoint, token, owner, app) {
-    const options = {
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'X-API-Token': token },
-        url: `https://api.appcenter.ms/v0.1/apps/${owner}/${app}${endpoint}`
-    };
-    return options;
-}
