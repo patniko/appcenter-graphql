@@ -1,7 +1,7 @@
 const Queries = `
   account: Account
   organizations: [Organization]
-  apps(owner: String): App
+  apps: [App]
   app(owner: String! app: String!): App
 `;
 
