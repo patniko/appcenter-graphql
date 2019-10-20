@@ -22,33 +22,33 @@ const schema = buildSchema(`
 
 const account = {
   async account(obj, args, context) {
-    const account = await AccountApi.getAccount(token);
-    return account;
+    const response = await AccountApi.getAccount(token);
+    return response;
   },
   async organizations(obj, args, context) {
-    const account = await AccountApi.getOrganizations(token);
-    return account;
+    const response = await AccountApi.getOrganizations(token);
+    return response;
   },
   async apps(obj, args, context) {
-    const account = await AccountApi.getApps(token, obj.owner);
-    return account;
+    const response = await AccountApi.getApps(token, obj.owner);
+    return response;
   },
   async app(obj, args, context) {
-    const account = await AccountApi.getApp(token, obj.owner, obj.app);
-    return account;
+    const response = await AccountApi.getApp(token, obj.owner, obj.app);
+    return response;
   }
 };
 
 const distribute = {
   async releases(obj, args, context) {
-    const account = await DistributeApi.getReleases(token, obj.owner, obj.app);
-    return account;
+    const response = await DistributeApi.getReleases(token, obj.owner, obj.app);
+    return response;
   },
 };
 
 const root = {
-  account,
-  distribute
+  ...account,
+  ...distribute
 };
 
 const httpTrigger: AzureFunction = async function (context: Context, request: HttpRequest): Promise<void> {

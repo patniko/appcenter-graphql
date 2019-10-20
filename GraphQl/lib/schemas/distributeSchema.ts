@@ -1,5 +1,5 @@
 const Queries = `
-  releases(owner: String! app: String!): Release
+  releases(owner: String! app: String!): [Release]
 `;
 
 const Types = `
