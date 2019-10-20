@@ -26,14 +26,14 @@ const AccountResolvers = {
     }
   },
   Account: {
-    async __resolveType(obj, context, info){
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getAccount(token);
-      return response;
-    },
     async organizations(obj, args, context) {
       const token = TokenFromContext(context);
       const response = await AccountApi.getOrganizations(token);
+      return response;
+    },
+    async apps(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AccountApi.getApps(token);
       return response;
     },
   },

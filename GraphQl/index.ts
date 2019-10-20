@@ -22,46 +22,16 @@ require('dotenv').config();
 
 let token = "";
 const resolvers = {
+  Account: { ...AccountResolvers.Account },
   Query: {
-    hello: () => 'Hello world!',
-    async account(obj, args, context) {
-      console.log(obj);
-      console.log(args);
-      console.log(context);
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getAccount(token);
-      return response;
-    },
-    async organizations(obj, args, context) {
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getOrganizations(token);
-      return response;
-    },
-    async apps(obj, args, context) {
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getApps(token, obj.owner);
-      return response;
-    },
-
-    async app(obj, args, context) {
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getApp(token, obj.owner, obj.app);
-      return response;
-    },
-  },
-  Account: {
-    async organizations(obj, args, context) {
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getOrganizations(token);
-      return response;
-    },
-  },
+    ...AccountResolvers.Query ,
   /*,
   ...AnalyticsResolvers,
   ...BuildResolvers,
   ...DiagnosticsResolvers,
   ...DistributeResolvers,
   ...TestResolvers,*/
+  }
 };
 const typeDefs = gql`
   ${AccountSchema.Types}
@@ -72,7 +42,18 @@ const typeDefs = gql`
   }
 `;
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ request }) => {
+
+    const headerToken = request.headers["X-API-Token"];
+    token = headerToken || process.env.APPCENTER_TOKEN;
+
+    // add the user to the context
+    return { token };
+  }
+});
 module.exports = server.createHandler({
   cors: {
     origin: '*',
