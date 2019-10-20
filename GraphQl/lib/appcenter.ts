@@ -1,6 +1,14 @@
-import AccountApi from "./services/account";
 import Build from "./services/build";
 
-const request = require('request-promise');
+import AccountApi from "./services/account";
+import AccountSchema from "./schemas/accountSchema";
 
-export { AccountApi, Build };
+import DistributeApi from "./services/distribute";
+import DistributeSchema from "./schemas/distributeSchema";
+
+export {
+  AccountSchema,
+  AccountApi,
+  DistributeSchema,
+  DistributeApi
+};

@@ -1,29 +1,54 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 const { graphql, buildSchema } = require("graphql");
-import { AccountApi } from './lib/appcenter'
+import {
+  AccountSchema,
+  AccountApi,
+  DistributeSchema,
+  DistributeApi
+} from './lib/appcenter'
 
 require('dotenv').config();
 let token = "";
 
 const schema = buildSchema(`
-    type Account {
-      avatar_url: String
-      display_name: String
-      email: String
-      name: String
-      permissions: [String]
-    }
+    ${AccountSchema.Types}
+    ${DistributeSchema.Types}
+
     type Query {
-        account(token: ID): Account
+      ${AccountSchema.Queries}
+      ${DistributeSchema.Queries}
     }
 `);
 
-
-const root = {
+const account = {
   async account(obj, args, context) {
     const account = await AccountApi.getAccount(token);
     return account;
+  },
+  async organizations(obj, args, context) {
+    const account = await AccountApi.getOrganizations(token);
+    return account;
+  },
+  async apps(obj, args, context) {
+    const account = await AccountApi.getApps(token, obj.owner);
+    return account;
+  },
+  async app(obj, args, context) {
+    const account = await AccountApi.getApp(token, obj.owner, obj.app);
+    return account;
   }
+};
+
+const distribute = {
+  async releases(obj, args, context) {
+    const account = await DistributeApi.getReleases(token, obj.owner, obj.app);
+    return account;
+  },
+};
+
+const root = {
+  account,
+  distribute
 };
 
 const httpTrigger: AzureFunction = async function (context: Context, request: HttpRequest): Promise<void> {
