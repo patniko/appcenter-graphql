@@ -1,38 +1,39 @@
-import Build from "./services/build";
-
-import AccountApi from "./services/account";
+import AccountApi from "./api/accountApi";
 import AccountSchema from "./schemas/accountSchema";
-
-import DistributeApi from "./services/distribute";
+import AccountResolvers from "./resolvers/accountResolvers";
+import AnalyticsApi from "./api/analyticsApi";
+import AnalyticsResolvers from "./resolvers/analyticsResolvers";
+import AnalyticsSchema from "./schemas/analyticsSchema";
+import BuildApi from "./api/buildApi";
+import BuildResolvers from "./resolvers/buildResolvers";
+import BuildSchema from "./schemas/buildSchema";
+import DiagnosticsApi from "./api/diagnosticsApi";
+import DiagnosticsResolvers from "./resolvers/diagnosticsResolvers";
+import DiagnosticsSchema from "./schemas/diagnosticsSchema";
+import DistributeApi from "./api/distributeApi";
+import DistributeResolvers from "./resolvers/distributeResolvers";
 import DistributeSchema from "./schemas/distributeSchema";
+import TestApi from "./api/testApi";
+import TestResolvers from "./resolvers/testResolvers";
+import TestSchema from "./schemas/testSchema";
 
 export {
-  AccountSchema,
   AccountApi,
+  AccountResolvers,
+  AccountSchema,
+  AnalyticsApi,
+  AnalyticsResolvers,
+  AnalyticsSchema,
+  BuildApi,
+  BuildResolvers,
+  BuildSchema,
+  DiagnosticsApi,
+  DiagnosticsResolvers,
+  DiagnosticsSchema,
+  DistributeApi,
+  DistributeResolvers,
   DistributeSchema,
-  DistributeApi
+  TestApi,
+  TestResolvers,
+  TestSchema,
 };
-
-
-/*
-Build
-- list configs
-- start build
-- get config
-Test
-- get devices
-- list tests
-- get details
-Distribute
-- list testers in group
-- list releases in group
-Diagnostics
-- get crash groups
-- get crash details
-Analytics
-- active users
-- sessions
-- localization
-Data
-- read partition data
-*/

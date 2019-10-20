@@ -1,80 +1,56 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 const { graphql, buildSchema } = require("graphql");
 import {
+  AccountResolvers,
   AccountSchema,
-  AccountApi,
+  AnalyticsResolvers,
+  AnalyticsSchema,
+  BuildSchema,
+  BuildResolvers,
+  DiagnosticsResolvers,
+  DiagnosticsSchema,
+  DistributeResolvers,
   DistributeSchema,
-  DistributeApi
+  TestResolvers,
+  TestSchema
 } from './lib/appcenter'
+import buildResolvers from "./lib/resolvers/buildResolvers";
 
 require('dotenv').config();
-let token = "";
 
 const schema = buildSchema(`
     ${AccountSchema.Types}
+    ${AnalyticsSchema.Types}
+    ${BuildSchema.Types}
+    ${DiagnosticsSchema.Types}
     ${DistributeSchema.Types}
+    ${TestSchema.Types}
 
     type Query {
       ${AccountSchema.Queries}
+      ${AnalyticsSchema.Queries}
+      ${BuildSchema.Queries}
+      ${DiagnosticsSchema.Queries}
       ${DistributeSchema.Queries}
+      ${TestSchema.Queries}
     }
 `);
 
-const account = {
-  async account(obj, args, context) {
-    const response = await AccountApi.getAccount(token);
-    return response;
-  },
-  async organizations(obj, args, context) {
-    const response = await AccountApi.getOrganizations(token);
-    return response;
-  },
-  async apps(obj, args, context) {
-    const response = await AccountApi.getApps(token, obj.owner);
-    return response;
-  },
-  async app(obj, args, context) {
-    const response = await AccountApi.getApp(token, obj.owner, obj.app);
-    return response;
-  }
-};
-
-const distribute = {
-  async releases(obj, args, context) {
-    const response = await DistributeApi.getReleases(token, obj.owner, obj.app);
-    return response;
-  },
-  async release(obj, args, context) {
-    const response = await DistributeApi.getRelease(token, obj.owner, obj.app, obj.id);
-    return response;
-  },
-  async distributionGroups(obj, args, context) {
-    const response = await DistributeApi.getDistributionGroups(token, obj.owner, obj.app);
-    return response;
-  },
-  async distributionGroup(obj, args, context) {
-    const response = await DistributeApi.getDistributionGroup(token, obj.owner, obj.app, obj.name);
-    return response;
-  },
-  async distributionGroupTesters(obj, args, context) {
-    const response = await DistributeApi.getDistributionGroupTesters(token, obj.owner, obj.app, obj.name);
-    return response;
-  },
-  async distributionGroupReleases(obj, args, context) {
-    const response = await DistributeApi.getDistributionGroupReleases(token, obj.owner, obj.app, obj.name);
-    return response;
-  },
-};
-
+let token = "";
 const root = {
-  ...account,
-  ...distribute
+  token,
+  ...AccountResolvers,
+  ...AnalyticsResolvers,
+  ...BuildResolvers,
+  ...DiagnosticsResolvers,
+  ...DistributeResolvers,
+  ...TestResolvers,
 };
 
 const httpTrigger: AzureFunction = async function (context: Context, request: HttpRequest): Promise<void> {
 
   const headerToken = request.headers["X-API-Token"];
-  token = headerToken || process.env.APPCENTER_TOKEN;
+  root.token = headerToken || process.env.APPCENTER_TOKEN;
 
   const query = request.body.query;
   await context.log(`GraphQL request: ${query}`);

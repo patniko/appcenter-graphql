@@ -1,5 +1,5 @@
 const request = require('request-promise');
-export default class Build {
+export default class BuildApi {
 
     static getBuildConfiguration(branch, token, owner, app) {
         const endpoint = `/branches/${branch}/config`;
