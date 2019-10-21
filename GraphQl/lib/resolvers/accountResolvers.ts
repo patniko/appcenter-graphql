@@ -40,15 +40,15 @@ const AccountResolvers = {
   App: {
     async analytics(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AnalyticsApi.getAnalytics(token, args.owner, args.app);
+      const response = await AnalyticsApi.getAnalytics(token, obj.owner_name, obj.app_name);
       return response;
     },
     async releases(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await DistributeApi.getReleases(token, args.owner, args.app);
+      const response = await DistributeApi.getReleases(token, obj.owner_name, obj.app_name);
       return response;
     },
-  }
+  },
 };
 
 export default AccountResolvers;

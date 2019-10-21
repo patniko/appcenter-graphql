@@ -19,6 +19,7 @@ require('dotenv').config();
 
 const resolvers = {
   Account: { ...AccountResolvers.Account },
+  App: { ...AccountResolvers.App },
   Query: {
     ...AccountResolvers.Query,
     ...AnalyticsResolvers.Query,

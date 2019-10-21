@@ -6,7 +6,8 @@ export default class AccountApi {
     static async getAccount(token: String) {
         var options = BuildRequestOptions(token, "/user");
         let response = await request(options);
-        return JSON.parse(response);
+        response = JSON.parse(response);
+        return response;
     }
 
     static async getOrganizations(token: String) {
@@ -24,6 +25,9 @@ export default class AccountApi {
     static async getApp(token: String, owner: String, app: String) {
         var options = BuildRequestOptions(token, `/apps/${owner}/${app}`);
         let response = await request(options);
-        return JSON.parse(response);
+        response = JSON.parse(response);
+        response.owner_name = owner;
+        response.app_name = app;
+        return response;
     }
 };

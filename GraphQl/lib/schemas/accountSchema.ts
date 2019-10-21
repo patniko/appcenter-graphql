@@ -33,7 +33,7 @@ const Types = `
     release_type: String
     owner: Owner
     member_permissions: [String]
-    analytics: [Analytics]
+    analytics: Analytics
     releases: [Release]
   }
   type Owner {
