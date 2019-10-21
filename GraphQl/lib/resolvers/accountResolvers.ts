@@ -1,4 +1,4 @@
-import { AccountApi } from "../appcenter";
+import { AccountApi, AnalyticsApi } from "../appcenter";
 import { TokenFromContext } from "./utils";
 
 const AccountResolvers = {
@@ -15,13 +15,13 @@ const AccountResolvers = {
     },
     async apps(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AccountApi.getApps(token, obj.owner);
+      const response = await AccountApi.getApps(token, args.owner);
       return response;
     },
 
     async app(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AccountApi.getApp(token, obj.owner, obj.app);
+      const response = await AccountApi.getApp(token, args.owner, args.app);
       return response;
     }
   },
@@ -37,6 +37,13 @@ const AccountResolvers = {
       return response;
     },
   },
+  App: {
+    async analytics(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AnalyticsApi.getAnalytics(token, args.owner, args.app);
+      return response;
+    },
+  }
 };
 
 export default AccountResolvers;

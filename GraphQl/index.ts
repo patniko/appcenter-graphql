@@ -1,5 +1,3 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-//const { graphql, buildSchema } = require("graphql");
 const { gql, ApolloServer } = require("apollo-server-azure-functions");
 import {
   AccountResolvers,
@@ -16,7 +14,6 @@ import {
   TestSchema,
   AccountApi
 } from "./lib/appcenter";
-import { TokenFromContext } from "./lib/resolvers/utils";
 
 require('dotenv').config();
 
@@ -24,7 +21,8 @@ let token = "";
 const resolvers = {
   Account: { ...AccountResolvers.Account },
   Query: {
-    ...AccountResolvers.Query ,
+    ...AccountResolvers.Query,
+    ...AnalyticsResolvers.Query
   /*,
   ...AnalyticsResolvers,
   ...BuildResolvers,
@@ -34,11 +32,12 @@ const resolvers = {
   }
 };
 const typeDefs = gql`
-  ${AccountSchema.Types}
+${AccountSchema.Types}
+${AnalyticsSchema.Types}
 
   type Query {
-    hello: String
     ${AccountSchema.Queries}
+    ${AnalyticsSchema.Queries}
   }
 `;
 
@@ -49,8 +48,6 @@ const server = new ApolloServer({
 
     const headerToken = request.headers["X-API-Token"];
     token = headerToken || process.env.APPCENTER_TOKEN;
-
-    // add the user to the context
     return { token };
   }
 });
@@ -60,31 +57,3 @@ module.exports = server.createHandler({
     credentials: false,
   },
 });
-
-
-const httpTrigger: AzureFunction = async function (context: Context, request: HttpRequest): Promise<void> {
-
-  const headerToken = request.headers["X-API-Token"];
-  token = headerToken || process.env.APPCENTER_TOKEN;
-
-  const query = request.body.query;
-  await context.log(`GraphQL request: ${query}`);
-
-  const server = new ApolloServer({ typeDefs, resolvers }).createHandler({
-    cors: {
-      origin: '*',
-      credentials: false,
-    },
-  });
-  server(context, request);
-
-  /*await graphql(schema, query, root).then(async response => {
-    await context.log(`GraphQL response: ${response}`);
-    context.res = {
-      body: response
-    };
-    context.done();
-  });*/
-};
-
-export default httpTrigger;

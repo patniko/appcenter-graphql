@@ -2,29 +2,43 @@ import { AnalyticsApi } from "../appcenter";
 import { TokenFromContext } from "./utils";
 
 const AnalyticsResolvers = {
-  Query: {
-    /*async analytics(obj, args, context) {
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getAccount(token);
-      return response;
-    },
-    async organizations(obj, args, context) {
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getOrganizations(token);
-      return response;
-    },
-    async apps(obj, args, context) {
-      const token = TokenFromContext(context);
-      const response = await AccountApi.getApps(token, obj.owner);
-      return response;
-    },
 
-    async app(obj, args, context) {
+
+
+  Query: {
+    async analytics(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AccountApi.getApp(token, obj.owner, obj.app);
+      const response = await AnalyticsApi.getAnalytics(token, args.owner, args.app, args.end_date, args.days_ago);
       return response;
-    }*/
+    },
   },
+  Analytics: {
+    async users(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AnalyticsApi.getDeviceCounts(token, args.owner, args.app, args.end_date, args.days_ago);
+      return response;
+    },
+    async places(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AnalyticsApi.getPlaces(token, args.owner, args.app, args.end_date, args.days_ago);
+      return response;
+    },
+    async oses(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AnalyticsApi.getOses(token, args.owner, args.app, args.end_date, args.days_ago);
+      return response;
+    },
+    async models(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AnalyticsApi.getModels(token, args.owner, args.app, args.end_date, args.days_ago);
+      return response;
+    },
+    async languages(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await AnalyticsApi.getLanguages(token, args.owner, args.app, args.end_date, args.days_ago);
+      return response;
+    },
+  }
 };
 
 export default AnalyticsResolvers;
