@@ -2,9 +2,6 @@ import { AnalyticsApi } from "../appcenter";
 import { TokenFromContext } from "./utils";
 
 const AnalyticsResolvers = {
-
-
-
   Query: {
     async analytics(obj, args, context) {
       const token = TokenFromContext(context);
@@ -42,9 +39,3 @@ const AnalyticsResolvers = {
 };
 
 export default AnalyticsResolvers;
-/*
-Analytics
-- active users
-- sessions
-- localization
-*/

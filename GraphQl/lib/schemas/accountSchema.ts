@@ -34,6 +34,7 @@ const Types = `
     owner: Owner
     member_permissions: [String]
     analytics: [Analytics]
+    releases: [Release]
   }
   type Owner {
     display_name: String

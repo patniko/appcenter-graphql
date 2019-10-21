@@ -17,12 +17,12 @@ import {
 
 require('dotenv').config();
 
-let token = "";
 const resolvers = {
   Account: { ...AccountResolvers.Account },
   Query: {
     ...AccountResolvers.Query,
-    ...AnalyticsResolvers.Query
+    ...AnalyticsResolvers.Query,
+    ...DistributeResolvers.Query,
   /*,
   ...AnalyticsResolvers,
   ...BuildResolvers,
@@ -32,12 +32,14 @@ const resolvers = {
   }
 };
 const typeDefs = gql`
-${AccountSchema.Types}
-${AnalyticsSchema.Types}
+  ${AccountSchema.Types}
+  ${AnalyticsSchema.Types}
+  ${DistributeSchema.Types}
 
   type Query {
     ${AccountSchema.Queries}
     ${AnalyticsSchema.Queries}
+    ${DistributeSchema.Queries}
   }
 `;
 
@@ -45,9 +47,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ request }) => {
-
     const headerToken = request.headers["X-API-Token"];
-    token = headerToken || process.env.APPCENTER_TOKEN;
+    const token = headerToken || process.env.APPCENTER_TOKEN;
     return { token };
   }
 });

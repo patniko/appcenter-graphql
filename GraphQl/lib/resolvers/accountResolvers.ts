@@ -1,4 +1,4 @@
-import { AccountApi, AnalyticsApi } from "../appcenter";
+import { AccountApi, AnalyticsApi, DistributeApi } from "../appcenter";
 import { TokenFromContext } from "./utils";
 
 const AccountResolvers = {
@@ -41,6 +41,11 @@ const AccountResolvers = {
     async analytics(obj, args, context) {
       const token = TokenFromContext(context);
       const response = await AnalyticsApi.getAnalytics(token, args.owner, args.app);
+      return response;
+    },
+    async releases(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await DistributeApi.getReleases(token, args.owner, args.app);
       return response;
     },
   }
