@@ -1,4 +1,6 @@
+import { BuildRequestOptions } from "./utils";
 const request = require("request-promise");
+const snakeCaseKeys = require("snakecase-keys");
 
 export default class DistributeApi {
   static async getDistribute(token: String, owner: String, app: String) {
@@ -11,39 +13,27 @@ export default class DistributeApi {
   }
 
   static async getReleases(token: String, owner: String, app: String) {
-    var options = BuildUrl(token, `/apps/${owner}/${app}/releases`);
+    var options = BuildRequestOptions(token, `/apps/${owner}/${app}/releases`);
     let response = await request(options);
-    var releases = JSON.parse(response).map(release => {
-      if (release.build) {
-        release.build.branch_name = release.build.branchName;
-        release.build.commit_hash = release.build.commitHash;
-        release.build.commitMessage = release.build.commentMessage;
-      }
-      return release;
-    });
+    var releases = snakeCaseKeys(JSON.parse(response));
     return releases;
   }
 
   static async getRelease(token: String, owner: String, app: String, id: String) {
-    var options = BuildUrl(token, `/apps/${owner}/${app}/releases/${id}`);
+    var options = BuildRequestOptions(token, `/apps/${owner}/${app}/releases/${id}`);
     let response = await request(options);
-    var release = JSON.parse(response);
-    if (release.build) {
-      release.build.branch_name = release.build.branchName;
-      release.build.commit_hash = release.build.commitHash;
-      release.build.commitMessage = release.build.commentMessage;
-    }
+    var release = snakeCaseKeys(JSON.parse(response));
     return release;
   }
 
   static async getDistributionGroups(token: String, owner: String, app: String) {
-    var options = BuildUrl(token, `/apps/${owner}/${app}/distribution_groups`);
+    var options = BuildRequestOptions(token, `/apps/${owner}/${app}/distribution_groups`);
     let response = await request(options);
     return JSON.parse(response);
   }
 
   static async getDistributionGroup(token: String, owner: String, app: String, name: String) {
-    var options = BuildUrl(token, `/apps/${owner}/${app}/distribution_groups/${name}`);
+    var options = BuildRequestOptions(token, `/apps/${owner}/${app}/distribution_groups/${name}`);
     let response = await request(options);
     response = JSON.parse(response);
     response.params = {
@@ -54,34 +44,16 @@ export default class DistributeApi {
   }
 
   static async getDistributionGroupMembers(token: String, owner: String, app: String, name: String) {
-    var options = BuildUrl(token, `/apps/${owner}/${app}/distribution_groups/${name}/members`);
+    var options = BuildRequestOptions(token, `/apps/${owner}/${app}/distribution_groups/${name}/members`);
     let response = await request(options);
     return JSON.parse(response);
   }
 
   static async getDistributionGroupReleases(token: String, owner: String, app: String, name: String) {
-    var options = BuildUrl(token, `/apps/${owner}/${app}/distribution_groups/${name}/releases`);
+    var options = BuildRequestOptions(token, `/apps/${owner}/${app}/distribution_groups/${name}/releases`);
     let response = await request(options);
-    var releases = JSON.parse(response).map(release => {
-      if (release.build) {
-        release.build.branch_name = release.build.branchName;
-        release.build.commit_hash = release.build.commitHash;
-        release.build.commitMessage = release.build.commentMessage;
-      }
-      return release;
-    });
+    var releases = snakeCaseKeys(JSON.parse(response));
     return releases;
   }
 }
 
-function BuildUrl(token, endpoint) {
-  const options = {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "X-API-Token": token
-    },
-    url: `https://api.appcenter.ms/v0.1${endpoint}`
-  };
-  return options;
-}

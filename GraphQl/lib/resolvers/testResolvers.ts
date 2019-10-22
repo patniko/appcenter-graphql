@@ -1,20 +1,22 @@
 import { TestApi } from "../appcenter";
+import { TokenFromContext } from "./utils";
 
 const TestResolvers = {
-  /*async releases(obj, args, context) {
-    const response = await DistributeApi.getReleases(context.token, obj.owner, obj.app);
-    return response;
+  Query: {
+    async test(obj, args, context) {
+      const token = TokenFromContext(context);
+      const response = await TestApi.getTest(token, args.owner, args.app);
+      return response;
+    },
   },
-  async release(obj, args, context) {
-    const response = await DistributeApi.getRelease(context.token, obj.owner, obj.app, obj.id);
-    return response;
-  },*/
+  Test: {
+    async test_runs(obj, args, context, info) {
+      const token = TokenFromContext(context);
+      let {owner, app} = obj.params;
+      const response = await TestApi.getTestRuns(token, owner, app);
+      return response;
+    },
+  },
 };
 
 export default TestResolvers;
-
-/*
-Test
-- get devices
-- list tests
-- get details*/

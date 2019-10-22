@@ -23,14 +23,12 @@ const resolvers = {
   Analytics: AnalyticsResolvers.Analytics,
   Distribute: DistributeResolvers.Distribute,
   DistributionGroup: DistributeResolvers.DistributionGroup,
+  Test: TestResolvers.Test,
   Query: {
     ...AccountResolvers.Query,
     ...AnalyticsResolvers.Query,
-    ...DistributeResolvers.Query
-    /*,
-  ...BuildResolvers,
-  ...DiagnosticsResolvers,
-  ...TestResolvers,*/
+    ...DistributeResolvers.Query,
+    ...TestResolvers.Query,
   }
 };
 
@@ -38,11 +36,13 @@ const typeDefs = gql`
   ${AccountSchema.Types}
   ${AnalyticsSchema.Types}
   ${DistributeSchema.Types}
+  ${TestSchema.Types}
 
   type Query {
     ${AccountSchema.Queries}
     ${AnalyticsSchema.Queries}
     ${DistributeSchema.Queries}
+    ${TestSchema.Queries}
   }
 `;
 
