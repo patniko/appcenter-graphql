@@ -15,23 +15,25 @@ import {
   AccountApi
 } from "./lib/appcenter";
 
-require('dotenv').config();
+require("dotenv").config();
 
 const resolvers = {
-  Account: { ...AccountResolvers.Account },
-  App: { ...AccountResolvers.App },
+  Account: AccountResolvers.Account,
+  App: AccountResolvers.App,
+  Analytics: AnalyticsResolvers.Analytics,
+  Distribute: DistributeResolvers.Distribute,
+  DistributionGroup: DistributeResolvers.DistributionGroup,
   Query: {
     ...AccountResolvers.Query,
     ...AnalyticsResolvers.Query,
-    ...DistributeResolvers.Query,
-  /*,
-  ...AnalyticsResolvers,
+    ...DistributeResolvers.Query
+    /*,
   ...BuildResolvers,
   ...DiagnosticsResolvers,
-  ...DistributeResolvers,
   ...TestResolvers,*/
   }
 };
+
 const typeDefs = gql`
   ${AccountSchema.Types}
   ${AnalyticsSchema.Types}
@@ -55,7 +57,7 @@ const server = new ApolloServer({
 });
 module.exports = server.createHandler({
   cors: {
-    origin: '*',
-    credentials: false,
-  },
+    origin: "*",
+    credentials: false
+  }
 });

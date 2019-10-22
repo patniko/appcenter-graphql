@@ -10,29 +10,34 @@ const AnalyticsResolvers = {
     },
   },
   Analytics: {
-    async users(obj, args, context) {
+    async devices(obj, args, context, info) {
       const token = TokenFromContext(context);
-      const response = await AnalyticsApi.getDeviceCounts(token, args.owner, args.app, args.end_date, args.days_ago);
+      let {owner, app, end_date, days_ago} = obj.params;
+      const response = await AnalyticsApi.getDeviceCounts(token, owner, app, end_date, days_ago);
       return response;
     },
     async places(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AnalyticsApi.getPlaces(token, args.owner, args.app, args.end_date, args.days_ago);
+      let {owner, app, end_date, days_ago} = obj.params;
+      const response = await AnalyticsApi.getPlaces(token, owner, app, end_date, days_ago);
       return response;
     },
     async oses(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AnalyticsApi.getOses(token, args.owner, args.app, args.end_date, args.days_ago);
+      let {owner, app, end_date, days_ago} = obj.params;
+      const response = await AnalyticsApi.getOses(token, owner, app, end_date, days_ago);
       return response;
     },
     async models(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AnalyticsApi.getModels(token, args.owner, args.app, args.end_date, args.days_ago);
+      let {owner, app, end_date, days_ago} = obj.params;
+      const response = await AnalyticsApi.getModels(token, owner, app, end_date, days_ago);
       return response;
     },
     async languages(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AnalyticsApi.getLanguages(token, args.owner, args.app, args.end_date, args.days_ago);
+      let {owner, app, end_date, days_ago} = obj.params;
+      const response = await AnalyticsApi.getLanguages(token, owner, app, end_date, days_ago);
       return response;
     },
   }

@@ -4,11 +4,9 @@ import request = require("request-promise");
 export default class AnalyticsApi {
     static async getAnalytics(token: String, owner: String, app: String, end_date: Date = new Date(), days_ago: number = 30) {
         const analytics = {
-            devices: await this.getDeviceCounts(token, owner, app, end_date, days_ago),
-            oses: await this.getOses(token, owner, app, end_date, days_ago),
-            models: await this.getModels(token, owner, app, end_date, days_ago),
-            languages: await this.getLanguages(token, owner, app, end_date, days_ago),
-            places: await this.getPlaces(token, owner, app, end_date, days_ago),
+            params: {
+                owner: owner, app: app, end_date: end_date, days_ago: days_ago
+            }
         };
         return analytics;
     }

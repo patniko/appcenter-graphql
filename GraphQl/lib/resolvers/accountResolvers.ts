@@ -40,12 +40,14 @@ const AccountResolvers = {
   App: {
     async analytics(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await AnalyticsApi.getAnalytics(token, obj.owner_name, obj.app_name);
+      let {owner, app} = obj.params;
+      const response = await AnalyticsApi.getAnalytics(token, owner, app);
       return response;
     },
-    async releases(obj, args, context) {
+    async distribute(obj, args, context) {
       const token = TokenFromContext(context);
-      const response = await DistributeApi.getReleases(token, obj.owner_name, obj.app_name);
+      let {owner, app} = obj.params;
+      const response = await DistributeApi.getDistribute(token, owner, app);
       return response;
     },
   },

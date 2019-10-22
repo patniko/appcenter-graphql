@@ -26,8 +26,10 @@ export default class AccountApi {
         var options = BuildRequestOptions(token, `/apps/${owner}/${app}`);
         let response = await request(options);
         response = JSON.parse(response);
-        response.owner_name = owner;
-        response.app_name = app;
+        response.params = {
+            owner: owner,
+            app: app
+        }
         return response;
     }
 };

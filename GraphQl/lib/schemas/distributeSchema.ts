@@ -1,13 +1,19 @@
 const Queries = `
+distribute(owner: String! app: String!): Distribute
 releases(owner: String! app: String!): [Release]
 release(owner: String! app: String!, id: ID): Release
 distributionGroups(owner: String! app: String!): [DistributionGroup]
 distributionGroup(owner: String! app: String! name: String!): DistributionGroup
-distributionGroupTesters(owner: String! app: String! name: String!): [DistributionGroupTester]
-distributionGroupReleases(owner: String! app: String! name: String!): [DistributionGroupTester]
+distributionGroupMembers(owner: String! app: String! name: String!): [Account]
+distributionGroupReleases(owner: String! app: String! name: String!): [Release]
 `;
 
 const Types = `
+type Distribute {
+  releases: [Release]
+  distribution_groups: [DistributionGroup]
+}
+
 type Release {
   id: ID
   app_name: String
@@ -45,15 +51,7 @@ type DistributionGroup {
   id: ID
   name: String
   is_public: Boolean
-}
-
-type DistributionGroupTester {
-  id: ID
-  avatar_url: String
-  display_name: String
-  email: String
-  invite_pending: Boolean
-  name: String
+  members: [Account]
 }
 `;
 
