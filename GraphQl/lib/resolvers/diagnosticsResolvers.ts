@@ -14,7 +14,7 @@ const DiagnosticsResolvers = {
       const token = TokenFromContext(context);
       let {owner, app, end_date, days_ago} = obj.params;
       const response = await DiagnosticsApi.getErrors(token, owner, app, end_date, days_ago);
-      return Normalize(response);;
+      return Normalize(response);
     }
   }
 };

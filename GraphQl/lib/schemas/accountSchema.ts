@@ -36,6 +36,7 @@ const Types = `
     member_permissions: [String]
     analytics: Analytics
     build: Build
+    diagnostics: Diagnostics
     distribute: Distribute
     test: Test
   }
