@@ -11,8 +11,7 @@ import {
   DistributeResolvers,
   DistributeSchema,
   TestResolvers,
-  TestSchema,
-  AccountApi
+  TestSchema
 } from "./lib/appcenter";
 
 require("dotenv").config();
@@ -24,11 +23,13 @@ const resolvers = {
   Build: BuildResolvers.Build,
   Distribute: DistributeResolvers.Distribute,
   DistributionGroup: DistributeResolvers.DistributionGroup,
+  Diagnostics: DiagnosticsResolvers.Diagnostics,
   Test: TestResolvers.Test,
   Query: {
     ...AccountResolvers.Query,
     ...AnalyticsResolvers.Query,
     ...BuildResolvers.Query,
+    ...DiagnosticsResolvers.Query,
     ...DistributeResolvers.Query,
     ...TestResolvers.Query,
   }
@@ -38,6 +39,7 @@ const typeDefs = gql`
   ${AccountSchema.Types}
   ${AnalyticsSchema.Types}
   ${BuildSchema.Types}
+  ${DiagnosticsSchema.Types}
   ${DistributeSchema.Types}
   ${TestSchema.Types}
 
@@ -45,6 +47,7 @@ const typeDefs = gql`
     ${AccountSchema.Queries}
     ${AnalyticsSchema.Queries}
     ${BuildSchema.Queries}
+    ${DiagnosticsSchema.Queries}
     ${DistributeSchema.Queries}
     ${TestSchema.Queries}
   }

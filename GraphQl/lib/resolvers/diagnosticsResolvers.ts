@@ -3,7 +3,7 @@ import { Normalize, TokenFromContext } from "./utils";
 
 const DiagnosticsResolvers = {
   Query: {
-    async diagnotics(obj, args, context) {
+    async diagnostics(obj, args, context) {
       const token = TokenFromContext(context);
       const response = await DiagnosticsApi.getDiagnostics(token, args.owner, args.app, args.end_date, args.days_ago);
       return Normalize(response);

@@ -9,7 +9,7 @@ type Diagnostics {
 
 type ErrorGroups {
   next_link: String
-  groups: [Error]
+  error_groups: [Error]
 }
 
 type Error {

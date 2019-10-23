@@ -15,7 +15,7 @@ export default class DiagnosticsApi {
   }
 
   static async getErrors(token: String, owner: String, app: String, end_date: Date = new Date(), days_ago: number = 30) {
-    var options = BuildRequestOptions(token, `/errors/errorGroups/active_device_counts?start=${GetStartDate(end_date, days_ago)}&end=${end_date.toISOString()}`, owner, app);
+    var options = BuildRequestOptions(token, `/errors/errorGroups?version=&app_build=&groupState=&start=${GetStartDate(end_date, days_ago)}&errorType=unhandlederror&$orderby=lastError%20desc&$top=100`, owner, app);
     let response = await request(options);
     return JSON.parse(response);
   }
