@@ -1,4 +1,4 @@
-import { AccountApi, AnalyticsApi, DistributeApi, TestApi } from "../appcenter";
+import { AccountApi, AnalyticsApi, DistributeApi, TestApi, BuildApi } from "../appcenter";
 import { TokenFromContext } from "./utils";
 
 const AccountResolvers = {
@@ -54,6 +54,12 @@ const AccountResolvers = {
       const token = TokenFromContext(context);
       let {owner, app} = obj.params;
       const response = await TestApi.getTest(token, owner, app);
+      return response;
+    },
+    async build(obj, args, context) {
+      const token = TokenFromContext(context);
+      let {owner, app} = obj.params;
+      const response = await BuildApi.getBuild(token, owner, app);
       return response;
     },
   },

@@ -35,6 +35,7 @@ const Types = `
     owner: Owner
     member_permissions: [String]
     analytics: Analytics
+    build: Build
     distribute: Distribute
     test: Test
   }

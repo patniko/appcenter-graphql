@@ -1,13 +1,11 @@
 const Queries = `
 build(owner: String! app: String!): Build
-repos(owner: String! app: String!): [RepoConfig]
-branches(owner: String! app: String!): [Branch]
-branchConfig(owner: String! app: String!): Branch
+branchConfig(owner: String! app: String!): Build
 `;
 
 const Types = `
 type Build {
-  branches: [Branch]
+  repos: [Repo]
 }
 
 type Repo {

@@ -21,12 +21,14 @@ const resolvers = {
   Account: AccountResolvers.Account,
   App: AccountResolvers.App,
   Analytics: AnalyticsResolvers.Analytics,
+  Build: BuildResolvers.Build,
   Distribute: DistributeResolvers.Distribute,
   DistributionGroup: DistributeResolvers.DistributionGroup,
   Test: TestResolvers.Test,
   Query: {
     ...AccountResolvers.Query,
     ...AnalyticsResolvers.Query,
+    ...BuildResolvers.Query,
     ...DistributeResolvers.Query,
     ...TestResolvers.Query,
   }
@@ -35,12 +37,14 @@ const resolvers = {
 const typeDefs = gql`
   ${AccountSchema.Types}
   ${AnalyticsSchema.Types}
+  ${BuildSchema.Types}
   ${DistributeSchema.Types}
   ${TestSchema.Types}
 
   type Query {
     ${AccountSchema.Queries}
     ${AnalyticsSchema.Queries}
+    ${BuildSchema.Queries}
     ${DistributeSchema.Queries}
     ${TestSchema.Queries}
   }

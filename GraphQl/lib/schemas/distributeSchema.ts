@@ -30,12 +30,11 @@ type Release {
   bundle_identifier: String
   download_url: String
   app_icon_url: String
-
-  build: Build
+  build: SourceBuild
   destinations: [Destination]
 }
 
-type Build {
+type SourceBuild {
   branch_name: String
   commit_hash: String
   commit_message: String
