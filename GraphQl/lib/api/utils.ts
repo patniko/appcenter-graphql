@@ -5,3 +5,9 @@ export function BuildRequestOptions(token: String, endpoint: String, owner: Stri
   };
   return options;
 }
+
+export function  GetStartDate(end_date: Date, days_ago: number = 30) {
+  const start = new Date();
+  start.setDate(end_date.getDate() - days_ago)
+  return start.toISOString();
+}

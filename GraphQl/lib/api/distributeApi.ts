@@ -1,6 +1,5 @@
 import { BuildRequestOptions } from "./utils";
 const request = require("request-promise");
-const snakeCaseKeys = require("snakecase-keys");
 
 export default class DistributeApi {
   static async getDistribute(token: String, owner: String, app: String) {
@@ -15,14 +14,14 @@ export default class DistributeApi {
   static async getReleases(token: String, owner: String, app: String) {
     var options = BuildRequestOptions(token, `/apps/${owner}/${app}/releases`);
     let response = await request(options);
-    var releases = snakeCaseKeys(JSON.parse(response));
+    var releases = JSON.parse(response);
     return releases;
   }
 
   static async getRelease(token: String, owner: String, app: String, id: String) {
     var options = BuildRequestOptions(token, `/apps/${owner}/${app}/releases/${id}`);
     let response = await request(options);
-    var release = snakeCaseKeys(JSON.parse(response));
+    var release = JSON.parse(response);
     return release;
   }
 
@@ -52,7 +51,7 @@ export default class DistributeApi {
   static async getDistributionGroupReleases(token: String, owner: String, app: String, name: String) {
     var options = BuildRequestOptions(token, `/apps/${owner}/${app}/distribution_groups/${name}/releases`);
     let response = await request(options);
-    var releases = snakeCaseKeys(JSON.parse(response));
+    var releases = JSON.parse(response);
     return releases;
   }
 }

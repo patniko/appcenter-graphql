@@ -1,6 +1,6 @@
 import { BuildRequestOptions } from "./utils";
-
 const request = require("request-promise");
+
 export default class BuildApi {
   static async getBuild(token: String, owner: String, app: String) {
     return {
@@ -29,4 +29,3 @@ export default class BuildApi {
     return JSON.parse(response);
   }
 }
-

@@ -1,4 +1,3 @@
-const snakeCaseKeys = require("snakecase-keys");
 import { BuildRequestOptions } from "./utils";
 const request = require("request-promise");
 
@@ -15,7 +14,7 @@ export default class DistributeApi {
   static async getTestRuns(token: String, owner: String, app: String) {
     var options = BuildRequestOptions(token, `/apps/${owner}/${app}/test_runs`);
     let response = await request(options);
-    var releases = snakeCaseKeys(JSON.parse(response));
+    var releases = JSON.parse(response);
     return releases;
   }
 }

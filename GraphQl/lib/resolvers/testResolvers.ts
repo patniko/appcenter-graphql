@@ -1,12 +1,12 @@
 import { TestApi } from "../appcenter";
-import { TokenFromContext } from "./utils";
+import { Normalize, TokenFromContext } from "./utils";
 
 const TestResolvers = {
   Query: {
     async test(obj, args, context) {
       const token = TokenFromContext(context);
       const response = await TestApi.getTest(token, args.owner, args.app);
-      return response;
+      return Normalize(response);;
     },
   },
   Test: {
@@ -14,7 +14,7 @@ const TestResolvers = {
       const token = TokenFromContext(context);
       let {owner, app} = obj.params;
       const response = await TestApi.getTestRuns(token, owner, app);
-      return response;
+      return Normalize(response);;
     },
   },
 };
