@@ -1,13 +1,13 @@
 const Queries = `
 build(owner: String! app: String!): Build
-branchConfig(owner: String! app: String!): Build
+branchConfig(owner: String! app: String! name: String!): BranchConfig
 `;
 
 const Types = `
 type Build {
   repos: [Repo]
+  branches: [Branch]
 }
-
 type Repo {
   repo_url: String
   repo_id: String
@@ -19,112 +19,85 @@ type Repo {
   state: String
   user_email: String
 }
-
-`;
-
-export default { Queries, Types };
-
-
-/*
-needs to be converted to snake case.
-
 type Branch {
   id: ID
+  name: String
+  sha: String
   configured: Boolean
-  buildNumber: String
-  queueTime: String
-  startTime: String
-  finishTime: String
-  lastChangedDate: String
+  build_number: String
+  queue_time: String
+  start_time: String
+  finish_time: String
+  last_changed_date: String
   status: String
   result: String
-  sourceBranch: String
-  sourceVersion: String
+  source_branch: String
+  source_version: String
+  config: BranchConfig
 }
-
 type BranchConfig {
   trigger: String
   tests_enabled: Boolean
-  badgeIsEnabled: Boolean
+  badge_is_enabled: Boolean
   signed: Boolean
-  cl
-
+  javascript: Javascript
+  android: Android
+  xamarin: Xamarin
+  xcode: Xcode
 }
+type Javascript {
+  package_json_path: String
+  run_tests: Boolean
+  react_native_version: String
+}
+type Xamarin {
+  sln_path: String
+  is_sim_build: Build
+  args: String
+  configuration: String
+  p12_file: String
+  p12_pwd: String
+  prov_profile: String
+  mono_version: String
+  sdk_bundle: String
+  symlink: String
+}
+type Android {
+  gradle_wrapper_path: String
+  module: String
+  build_variant: String
+  run_tests: Boolean
+  run_lint: Boolean
+  is_root: Boolean
+  automatic_signing: Boolean
+  keystore_password: String
+  key_alias: String
+  key_password: String
+  keystore_filename: String
+  keystore_encoded: String
+}
+type Xcode {
+  project_or_workspace_path: String
+  podfile_path: String
+  cartfile_path: String
+  provisioning_profile_encoded: String
+  certificate_encoded: String
+  provisioning_profile_file_id: String
+  certificate_file_id: String
+  provisioning_profile_upload_id: String
+  certificate_upload_id: String
+  certificate_password: String
+  scheme: String
+  xcode_version: String
+  provisionin_profile_filename: String
+  certificate_filename: String
+  team_id: String
+  automatic_signing: Boolean
+  xcode_project_sha: String
+  archive_configuration: String
+  target_to_archive: String
+  force_legacy_build_system: Boolean
+}
+`;
 
-
-
-  {
-    trigger: continous,
-    testsEnabled: true,
-    badgeIsEnabled: true,
-    signed: true,
-    cloneFromBranch: string,
-    toolsets: {
-      xcode: {
-        projectOrWorkspacePath: string,
-        podfilePath: string,
-        cartfilePath: string,
-        provisioningProfileEncoded: string,
-        certificateEncoded: string,
-        provisioningProfileFileId: string,
-        certificateFileId: string,
-        provisioningProfileUploadId: string,
-        appExtensionProvisioningProfileFiles: [
-          {
-            fileName: string,
-            fileId: string,
-            uploadId: string,
-            targetBundleIdentifier: string
-          }
-        ],
-        certificateUploadId: string,
-        certificatePassword: string,
-        scheme: string,
-        xcodeVersion: string,
-        provisioningProfileFilename: string,
-        certificateFilename: string,
-        teamId: string,
-        automaticSigning: true,
-        xcodeProjectSha: string,
-        archiveConfiguration: string,
-        targetToArchive: string,
-        forceLegacyBuildSystem: true
-      },
-      javascript: {
-        packageJsonPath: string,
-        runTests: true,
-        reactNativeVersion: string
-      },
-      xamarin: {
-        slnPath: string,
-        isSimBuild: true,
-        args: string,
-        configuration: string,
-        p12File: string,
-        p12Pwd: string,
-        provProfile: string,
-        monoVersion: string,
-        sdkBundle: string,
-        symlink: string
-      },
-      android: {
-        gradleWrapperPath: android/gradlew,
-        module: app,
-        buildVariant: release,
-        runTests: true,
-        runLint: true,
-        isRoot: true,
-        automaticSigning: true,
-        keystorePassword: string,
-        keyAlias: string,
-        keyPassword: string,
-        keystoreFilename: string,
-        keystoreEncoded: string
-      }
-    },
-    artifactVersioning: {
-      buildNumberFormat: buildId
-    },
-    id: 0,
-  }
-}*/
+export default { Queries, Types };

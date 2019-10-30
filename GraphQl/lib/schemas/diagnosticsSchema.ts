@@ -6,12 +6,10 @@ const Types = `
 type Diagnostics {
   errors: ErrorGroups
 }
-
 type ErrorGroups {
   next_link: String
   error_groups: [Error]
 }
-
 type Error {
   state: String
   annotation: String
@@ -33,7 +31,6 @@ type Error {
   code_raw: String
   reason_frames: [Frame]
 }
-
 type Frame {
   class_name: String
   method: String

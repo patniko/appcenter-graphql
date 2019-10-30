@@ -21,6 +21,7 @@ const resolvers = {
   App: AccountResolvers.App,
   Analytics: AnalyticsResolvers.Analytics,
   Build: BuildResolvers.Build,
+  Branch: BuildResolvers.Branch,
   Distribute: DistributeResolvers.Distribute,
   DistributionGroup: DistributeResolvers.DistributionGroup,
   Diagnostics: DiagnosticsResolvers.Diagnostics,

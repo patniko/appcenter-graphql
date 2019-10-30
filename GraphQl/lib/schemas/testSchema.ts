@@ -7,7 +7,6 @@ const Types = `
 type Test {
   test_runs: [TestRun]
 }
-
 type TestRun {
   id: ID
   date: String
@@ -22,7 +21,6 @@ type TestRun {
   test_series: String
   test_type: String
 }
-
 type Stats {
   devices: Int
   devices_finished: Int

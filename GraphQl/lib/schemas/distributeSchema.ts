@@ -13,7 +13,6 @@ type Distribute {
   releases: [Release]
   distribution_groups: [DistributionGroup]
 }
-
 type Release {
   id: ID
   app_name: String
@@ -33,19 +32,16 @@ type Release {
   build: SourceBuild
   destinations: [Destination]
 }
-
 type SourceBuild {
   branch_name: String
   commit_hash: String
   commit_message: String
 }
-
 type Destination {
   id: ID
   name: String
   destination_type: String
 }
-
 type DistributionGroup {
   id: ID
   name: String

@@ -23,9 +23,11 @@ export default class BuildApi {
     return JSON.parse(response);
   }
 
-  static async getBranchConfig(branch, token, owner, app) {
+  static async getBranchConfig(token: String, owner: String, app: String, branch: String) {
     var options = BuildRequestOptions(token, `/apps/${owner}/${app}/branches/${branch}/config`);
     let response = await request(options);
-    return JSON.parse(response);
+    let config = JSON.parse(response);
+    Object.assign(config, config.toolsets);
+    return config;
   }
 }
