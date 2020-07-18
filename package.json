@@ -17,7 +17,7 @@
     "dotenv": "^8.2.0",
     "graphiql-azure-functions": "^1.0.5",
     "graphql": "^14.5.8",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "snakecase-keys": "^3.1.0"
